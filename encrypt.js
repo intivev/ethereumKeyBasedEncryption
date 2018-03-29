@@ -1,6 +1,7 @@
 const EthCrypto = require('eth-crypto');
 const secp256k1 = require('secp256k1');
 const SHA3      = require('keccakjs');
+const readline  = require('readline-sync');
 
 let generatePublicKey = (privateKey) => {
     let private_key = new Buffer(privateKey, "hex");
@@ -54,6 +55,8 @@ let test = async (privateKey, publicKey) => {
         let decryptedMsg    = await decryptData(encryptedMsg, privateKey);
 
         //console.log(decryptedMsg);
+        console.log("Original Message  : " + message);
+        console.log("Decrypted Message : " + decryptedMsg);
         if(message === decryptedMsg) {
             console.log("Original message and decrypted message both are same");
         }
@@ -64,11 +67,16 @@ let test = async (privateKey, publicKey) => {
 
 }
 
-
-let privateKey  = "36a005de979e7e62362ed28ed9ba996730a52cef2084f1039848823eae0d76ac";
+let privateKey  = readline.question("Enter private key ");
 let publicKey   = generatePublicKey(privateKey);
 let address     = generateAddress(publicKey);
-
+console.log("-------------------------------------------");
+console.log("Following is the generated public Key");
+console.log(publicKey);
+console.log("-------------------------------------------");
+console.log("Following is the generated address");
+console.log(address);
+console.log("-------------------------------------------");
 publicKey       = publicKey.substring(2);
 privateKey      = "0x" + privateKey;
 
